@@ -7,6 +7,7 @@ string connectionString =
     builder.Configuration.GetConnectionString("Pizzas") ?? "Data Source=Pizzas.db";
 
 builder.Services.AddEndpointsApiExplorer();
+
 // builder.Services.AddDbContext<PizzaDb>(static options => options.UseInMemoryDatabase("items"));
 builder.Services.AddSqlite<PizzaDb>(connectionString);
 builder.Services.AddSwaggerGen(static c =>
@@ -33,6 +34,7 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/", static () => "Hello World!");
 app.MapGet("/pizzas", static async (PizzaDb db) => await db.Pizzas.ToListAsync());
+// 
 app.MapPost(
     "/pizza",
     static async (PizzaDb db, Pizza pizza) =>
